@@ -21,6 +21,13 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 import axios from "axios";
 import "./App.css";
 
+
+const getDiscountedPrice = (productDataitem) => {
+  const originalPrice = productDataitem.price;
+  const discountPercentage = productDataitem.discountPercentage;
+  return originalPrice * (1 - discountPercentage / 100);
+};
+
 const App = () => {
   const [productData, setProductData] = useState([]);
   const [brand, setBarnd] = useState([]);
@@ -125,6 +132,10 @@ const App = () => {
   //     return firstItem[sortBy] - secondItem[sortBy]
   //   });
 
+  // const discountedPrice = productDataitem.price;
+  // const discountPercentage = productDataitem.discountPercentage;
+  // const originalPrice = discountedPrice / (1 - discountPercentage / 100)
+
   const filteredProducts = productData
     .filter(
       (productDataitem) =>
@@ -155,7 +166,7 @@ const App = () => {
     });
 
   const FilteredProdutcsLength = filteredProducts.length;
-  
+
   return (
     <>
       <Container>
@@ -315,13 +326,8 @@ const App = () => {
                     color="text.primary"
                     sx={{ m: 1 }}
                   >
-                    {(
-                      (productDataitem.price *
-                        productDataitem.discountPercentage) /
-                      100
-                    ).toFixed(2)}{" "}
-                    {`Original Price: ${productDataitem.price.toFixed(2)}`}
-                   
+                    {getDiscountedPrice(productDataitem)?.toFixed(2)}{" "}
+                    {`Original Price:  ${productDataitem.price}`}
                   </Typography>
                   <Typography
                     variant="body2"
